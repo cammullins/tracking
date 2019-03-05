@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tracking</title>
+    <style>
+    table {
+        /* width: 100%; */
+        border-collapse: collapse;
+        overflow-x: scroll;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+    td {
+        padding: 4px
+    }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>Contaminent</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/json2html/1.2.0/json2html.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript">
+        let d;
+        $(function () {
+            $.getJSON('tracking.json', function (data) {
+                d = data;
+                console.log(d)
+                d[0].readings[0].contaminants.forEach(contam => {
+                    $('tbody').append($(`<tr id="${contam}"><td>${contam}</td></tr>`));
+                })
+                d.forEach(dt => {
+                    const head = dt.date;
+                    const readings = dt.readings;
+                    readings.forEach( reading => {
+                        $('thead tr').append($(`<td>${head} ${reading.time}hr</td>`));
+                    })
+                    // const 
+                });
+            }).error(function () {
+                console.log('error');
+            });
+        });
+    </script>
+</body>
+</html>
